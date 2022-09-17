@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "promises-aplus-tests new-promise.js"
+  },
   "devDependencies": {
     "promises-aplus-tests": "^2.1.2"
   }
