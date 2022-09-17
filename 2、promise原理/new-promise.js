@@ -7,14 +7,11 @@ function isFunction(argument) {
 }
 
 class Promise {
-  // 静态属性，状态枚举值
-  static STATE = {
-    PENDING: 'pending',
-    FULFILLED: 'fulfilled',
-    REJECTED: 'rejected'
-  }
+  static PENDING = 'pending'
+  static FULFILLED = 'fulfilled'
+  static REJECTED = 'rejected'
 
-  state = Promise.STATE.PENDING // 当前状态
+  state = Promise.PENDING // 当前状态
   value // 终值
   reason // 拒因
   onFulfilledReactions = [] // 当 fulfilled 时的异步操作
@@ -40,8 +37,8 @@ class Promise {
   // value 为终值
   resolve = (value) => {
     // 状态一旦改变，再次调用也没用
-    if (this.state === Promise.STATE.PENDING) {
-      this.state = Promise.STATE.FULFILLED; // 改变状态
+    if (this.state === Promise.PENDING) {
+      this.state = Promise.FULFILLED; // 改变状态
       this.value = value; // 赋终值
       this.onFulfilledReactions.forEach(fn => fn()); // 调用处理函数
     }
@@ -51,8 +48,8 @@ class Promise {
   // reason 为拒因
   reject = (reason) => {
     // 状态一旦改变，再次调用也没用
-    if (this.state === Promise.STATE.PENDING) { // 等待状态才行
-      this.state = Promise.STATE.REJECTED; // 改变状态
+    if (this.state === Promise.PENDING) { // 等待状态才行
+      this.state = Promise.REJECTED; // 改变状态
       this.reason = reason; // 赋值拒因
       this.onRejectedReactions.forEach(fn => fn()) // 执行操作
     }
@@ -97,11 +94,11 @@ class Promise {
         })
       }
 
-      if (this.state === Promise.STATE.FULFILLED) {
+      if (this.state === Promise.FULFILLED) {
         onFulfilledReaction()
-      } else if (this.state === Promise.STATE.REJECTED) {
+      } else if (this.state === Promise.REJECTED) {
         onRejectedReaction()
-      } else if (this.state === Promise.STATE.PENDING) {
+      } else if (this.state === Promise.PENDING) {
         this.onFulfilledReactions.push(onFulfilledReaction);
         this.onRejectedReactions.push(onRejectedReaction)
       }
